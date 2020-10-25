@@ -1,0 +1,23 @@
+/* comentário de CSS 
+	salvar como estilos.css */
+h1 { margin:0px;}
+h2 { text-align: center;}
+h3 { margin:5px 0px 5px 0px;}
+body {
+		background:white;
+		background-size:cover;
+		color:black;
+		font-family:Comic Sans MS;
+}	
+#form {
+	width:800px;
+	margin:5px auto;
+	background-color:silver;
+	border:2px ridge black;
+	text-align:left;
+}
+
+
+input,select, textarea { 
+	background-color:white;
+}

@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+	<head>
+    <title>Cep top</title>
+    <meta 	http-equiv="Content-Type" 
+			content="text/html; charset=utf-8" />
+	<link rel="stylesheet" type="text/css" href="estilo.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+    
+    function limpa_formulário_cep() {
+            //Limpa valores do formulário de cep.
+            document.getElementById('rua').value=("");
+            document.getElementById('bairro').value=("");
+            document.getElementById('cidade').value=("");
+            document.getElementById('uf').value=("");
+            
+    }
+
+    function meu_callback(conteudo) {
+        if (!("erro" in conteudo)) {
+            document.getElementById('rua').value=(conteudo.logradouro);
+            document.getElementById('bairro').value=(conteudo.bairro);
+            document.getElementById('cidade').value=(conteudo.localidade);
+            document.getElementById('uf').value=(conteudo.uf); 
+        }
+        else {
+            //CEP não Encontrado.
+            limpa_formulário_cep();
+            alert("CEP não encontrado.");
+        }
+    }
+        
+    function pesquisacep(valor) {
+
+        //variável "cep" somente com dígitos.
+        var cep = valor.replace(/\D/g, '');
+		
+        if (cep != "") {
+
+            //Expressão para validar o cep
+            var validacep = /^[0-9]{8}$/;
+
+            //Valida o formato do CEP.
+            if(validacep.test(cep)) {
+			
+                document.getElementById('rua').value="...";
+                document.getElementById('bairro').value="...";
+                document.getElementById('cidade').value="...";
+                document.getElementById('uf').value="...";
+               
+                var script = document.createElement('script');
+                script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback';
+
+                document.body.appendChild(script);
+            }
+            else {
+                limpa_formulário_cep();
+                alert("Formato de CEP inválido.");
+            }
+        }
+        else {
+            limpa_formulário_cep();
+        }
+    };
+
+    </script>
+    </head>
+	
+	<body>
+		<h2>Cep Facíl</h2>
+		<div id= "form"
+			class="">
+			
+     <form 
+			method = "get"
+			action = ".">
+			
+			<label>Cep:
+        <input 	name="cep" 
+				type="text" 
+				id="cep"
+				value="" 
+				size="10" 
+				maxlength="9"
+				placeholder="Ex:00000-000"
+				onblur="pesquisacep(this.value);"/>
+				</label><hr>
+				
+			<label>Rua:
+			<input 	name="rua"
+					type="text"
+					id= "rua"
+					size="40"/>
+					</label><br>
+			
+			<label>Bairro:
+			<input 	name="bairro"
+					type="text"
+					id= "bairro"
+					size="31"/>
+					</label><br>
+					
+			<label>Cidade:
+			<input 	name="cidade"
+					type="text"
+					id= "cidade"
+					size="30"/>
+					<br></label>
+					
+			<label>Estado:
+			<input 	name="uf"
+					type="text"
+					id= "uf"
+					size="2"/></label>
+					
+			</form>
+		</div>
+	</body>
+</html>
